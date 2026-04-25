@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPAS | Student Performance Analysis System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- PUBLIC NAVIGATION (Centered Title) -->
+    <nav class="navbar" id="public-nav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+            </div>
+            <div class="nav-center">
+                <h1 class="main-title">Student Performance Analysis System</h1>
+            </div>
+            <div class="nav-right">
+                <button class="btn btn-outline" onclick="showSection('signin')">Sign In</button>
+                <button class="btn btn-primary" onclick="showSection('signup')">Sign Up</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PUBLIC SECTIONS -->
+    <main id="public-content" class="container">
+        <!-- Home Section -->
+        <section id="home" class="content-section">
+            <div class="hero-portal-container">
+                <div class="hero-text-centered">
+                    <h1>Welcome to the Future of Academic Tracking</h1>
+                    <p>Monitor progress, analyze grades, and achieve excellence with our unified analytical portal.</p>
+                </div>
+
+                <!-- Catchy Feature Boxes -->
+                <div class="portal-features">
+                    <div class="feature-box bg-mint-box" onclick="showSection('signin')">
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>View Marks</h3>
+                        <p>Access subject-wise performance instantly.</p>
+                        <span class="feature-link">Check Now <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="feature-box bg-purple-box" onclick="showSection('signin')">
+                        <div class="feature-icon"><i class="fas fa-star"></i></div>
+                        <h3>CGPA Tracking</h3>
+                        <p>Automated CGPA calculation and history.</p>
+                        <span class="feature-link">Analyze <i class="fas fa-arrow-right"></i></span>
+                    </div>
+
+                    <div class="feature-box bg-pink-box" onclick="showSection('signin')">
+                        <div class="feature-icon"><i class="fas fa-percentage"></i></div>
+                        <h3>Average Analysis</h3>
+                        <p>Compare your scores with class averages.</p>
+                        <span class="feature-link">View Stats <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <div class="hero-action">
+                    <button class="btn btn-primary btn-large" onclick="showSection('signup')">Start Your Journey</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signup/Signin Forms -->
+        <section id="signup" class="content-section hidden">
+            <div class="form-card">
+                <h2>Create Account</h2>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <input type="text" id="reg-fname" placeholder="First Name" required>
+                        <input type="text" id="reg-lname" placeholder="Last Name" required>
+                    </div>
+                    <input type="text" id="reg-username" placeholder="Username" required>
+                    <input type="password" id="reg-password" placeholder="Password" required>
+                    <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required>
+                    <select id="reg-role" required>
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Faculty">Faculty</option>
+                        <option value="Student">Student</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="signin" class="content-section hidden">
+            <div class="form-card">
+                <h2>Welcome Back</h2>
+                <form id="signin-form">
+                    <input type="text" id="login-username" placeholder="Username" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+                <p class="form-footer">New user? <a href="#" onclick="showSection('signup')">Sign Up</a></p>
+            </div>
+        </section>
+    </main>
+
+    <!-- LOGGED IN DASHBOARD -->
+    <div id="dashboard-container" class="dashboard-layout hidden">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fas fa-university"></i>
+                <span>SPAS PORTAL</span>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="#" class="active" id="dash-link-side" onclick="routeDashboard()"><i class="fas fa-columns"></i> Dashboard</a>
+                <a href="#" id="admin-link" class="hidden" onclick="renderAdminTable()"><i class="fas fa-users-cog"></i> Manage Users</a>
+                <a href="#" id="faculty-link" class="hidden" onclick="renderFacultyTable()"><i class="fas fa-file-signature"></i> Grading Portal</a>
+            </nav>
+            <!-- Logout Pinned to Bottom -->
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-power-off"></i> Logout</button>
+        </aside>
+
+        <main class="main-panel">
+            <header class="top-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for results...">
+                </div>
+                <div class="user-pill" onclick="viewUserDetails(currentUser.id)" style="cursor: pointer;">
+                    <div class="user-meta">
+                        <strong id="display-name">User</strong>
+                        <span id="display-role">Role</span>
+                    </div>
+                    <img src="https://ui-avatars.com/api/?background=random" id="user-nav-avatar" class="nav-avatar">
+                </div>
+            </header>
+
+            <div class="panel-body">
+                <div class="hero-banner">
+                    <div class="banner-text">
+                        <p id="today-date"></p>
+                        <h2 id="banner-welcome">Welcome back!</h2>
+                        <p>Always stay updated with your performance analytics.</p>
+                    </div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/3413/3413535.png" class="banner-img">
+                </div>
+                <div id="dynamic-view"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Faculty Modal -->
+    <div id="mark-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Update Student Marks</h3>
+            <form id="mark-form">
+                <input type="text" id="stu-name" placeholder="Student First Name" required>
+                <div class="form-group">
+                    <input type="number" id="m-dbms" placeholder="DBMS" min="0" max="100" required>
+                    <input type="number" id="m-python" placeholder="Python" min="0" max="100" required>
+                    <input type="number" id="m-fs" placeholder="Full Stack" min="0" max="100" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
